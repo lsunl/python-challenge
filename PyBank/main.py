@@ -1,11 +1,9 @@
 import os
 import csv
-import pandas as pd
 
 
 
 csvpath = os.path.join('budget_data.csv')
-data = pd.read_csv("budget_data.csv")
 
 with open(csvpath, newline='') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
@@ -17,18 +15,18 @@ with open(csvpath, newline='') as csvfile:
     months = 0
     net = 0
     dates = []
+    money = []
     for row in csvreader:
-        shmoney = row[1]
-        net += int(shmoney)
+        net += int(row[1])
         dates.append(row[0])
+        money.append(row[1])
         months += 1
 
     #The average of the changes in "Profit/Losses" over the entire period
-    pl = data["Profit/Losses"]
     averagechange1 = []
 
-    for x in range(0, len(pl)-1):
-        averagechange1.append(pl[x+1] - pl[x])
+    for x in range(0, len(money)-1):
+        averagechange1.append(int(money[x+1]) - int(money[x]))
     averagechange2 = sum(averagechange1) / len(averagechange1)
     averagechange3 = "{0:.2f}".format(averagechange2)
 
